@@ -1,4 +1,6 @@
-package Lesson_02;
+package lec2;
+
+
 
 import java.io.*;
 import java.nio.ByteBuffer;
