@@ -5,5 +5,5 @@ import java.io.Serializable;
 public interface Writable {
     void save(Serializable serializable) throws IOException;
 
-    Object read() throws IOException, ClassNotFoundException;
+    Schedule load() throws IOException, ClassNotFoundException;
 }

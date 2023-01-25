@@ -9,14 +9,37 @@ public class FileHandler implements Writable, Serializable {
 
 
     @Override
-    public void save(Serializable serializable) throws IOException {
-        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename));
-        oos.writeObject(serializable);
+    public void save(Serializable serializable) {
+        try {
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(
+                    new FileOutputStream(filename));
+            objectOutputStream.writeObject(serializable);
+            objectOutputStream.close();
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
-    public Object read() throws IOException, ClassNotFoundException {
-        ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename));
-        return ois.readObject();
+    public Schedule load() {
+        Schedule result = null;
+        try {
+            ObjectInputStream objectInputStream = new ObjectInputStream(
+                    new FileInputStream(filename));
+            result = (Schedule) objectInputStream.readObject();
+            objectInputStream.close();
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }
