@@ -24,24 +24,11 @@ public class Presenter {
     }
 
     public Schedule readSchedule() throws IOException, ClassNotFoundException {
-       if (writable != null) {
-            try {
-                if (writable.load() == null) {
-                    System.out.println("Планировщика в файле нет! Создан новый планировщик.");
-                    return new Schedule();
-                } else {
-                    System.out.println("Планировщик загружен из файла");
-                    return (Schedule) writable.load();
-                }
-            } catch (Exception ex) {
-                System.out.println("Ошибка!");;
-            }
-        } else {
-            System.out.println("Файл не загружен!");
-            return new Schedule();
-        }
-        return new Schedule();
+        schedule = ui.readSchedule();
+        return schedule;
     }
+
+
 
 
 

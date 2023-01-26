@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class UI {
     private Schedule schedule;
     private Presenter presenter;
+    private Writable writable;
     List<Commands> commandsList;
 
     Scanner iScanner;
@@ -15,6 +16,7 @@ public class UI {
         schedule = this.presenter.readSchedule();
         commandsList = new ArrayList<>();
         iScanner = new Scanner(System.in);
+        this.writable = writable;
     }
 
     public Presenter getPresenter() {
@@ -26,9 +28,28 @@ public class UI {
     }
 
     public void printSchedule(Schedule schedule) {
-        System.out.println(schedule);
+        System.out.println(schedule.getAllTasks());
     }
 
+    public Schedule readSchedule() throws IOException, ClassNotFoundException {
+        if (writable != null) {
+            try {
+                if (writable.load() == null) {
+                    System.out.println("Планировщика в файле нет! Создан новый планировщик.");
+                    return new Schedule();
+                } else {
+                    System.out.println("Планировщик загружен из файла");
+                    return (Schedule) writable.load();
+                }
+            } catch (Exception ex) {
+                System.out.println("Ошибка!");;
+            }
+        } else {
+            System.out.println("Файл не загружен!");
+            return new Schedule();
+        }
+        return new Schedule();
+    }
     public void printDate(String currentDate, Date date) {
         if (date.getTasks().size() > 0) {
             System.out.printf("Задачи на %s:\n", currentDate);

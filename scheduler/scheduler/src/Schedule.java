@@ -1,7 +1,5 @@
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 public class Schedule implements Serializable {
 
@@ -67,4 +65,29 @@ public class Schedule implements Serializable {
         }
         return result;
     }
+
+    public List<Task> getAllTasks() {
+        List<Task> result = new ArrayList<>();
+        Iterator<String> dateIterator = dates.keySet().iterator();
+        for (Iterator<String> di = dateIterator; di.hasNext(); ) {
+            String currentDate = di.next();
+            Date date = dates.get(currentDate);
+            Iterator<Task> taskIterator = date.getTasks().iterator();
+            for (Iterator<Task> ti = taskIterator; ti.hasNext(); ) {
+                Task task = ti.next();
+                result.add(task);
+            }
+        }
+        return result;
+    }
+
+//    @Override
+//    public String toString() {
+//        StringBuilder datesRecords = new StringBuilder();
+//        datesRecords.append("Найдено дней с записями - ").append(this.dates.size()).append(":\n");
+//        for (String date : dates.keySet()) {
+//            datesRecords.append("\tДень ").append(date.toString()).append(".").append(dates.get(date).toString());
+//        }
+//        return datesRecords.toString();
+//    }
 }
